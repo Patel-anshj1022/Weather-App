@@ -16,6 +16,11 @@ const Forecast = ({ forecast }) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  // Check if forecast data exists
+  if (!forecast || !forecast.list) {
+    return <p>Loading forecast...</p>;
+  }
+
   // Filter future days only and sort by date
   const futureForecast = forecast.list
     .map((item) => ({
@@ -45,10 +50,10 @@ const Forecast = ({ forecast }) => {
         {uniqueForecast.map((item, index) => (
           <div key={index} className="forecast-card">
             <img src={getIconUrl(item.weather[0].icon)} alt={item.weather[0]?.description} className="forecast-icon" />
-            <p>{getDayOfWeek(item.dt_txt)}</p>
-            <p>{getFormattedDate(item.dt_txt)}</p>
-            <p>{Math.round(item.main.temp)}°C</p>
-            <p>{item.weather[0]?.description}</p>
+            <p className="forecast-day">{getDayOfWeek(item.dt_txt)}</p>
+            <p className="forecast-date">{getFormattedDate(item.dt_txt)}</p>
+            <p className="forecast-temp">{Math.round(item.main.temp)}°C</p>
+            <p className="forecast-desc">{item.weather[0]?.description}</p>
           </div>
         ))}
       </div>
