@@ -1,0 +1,99 @@
+.weather-card {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  padding: 15px;
+  width: 80%; /* Ensures a balanced fit */
+  max-width: 300px; /* Keeps the card compact */
+  margin: 10px auto; /* Reduces space between elements */
+  box-shadow: 0 4px 8px rgba(0, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.7);
+}
+
+.weather-card h2 {
+  font-size: 22px;
+  color: #00ffff;
+  text-shadow: 0 0 6px #00ffff;
+  margin-bottom: 5px;
+}
+
+.weather-card h3 {
+  font-size: 16px;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+  margin: 5px 0;
+}
+
+.weather-card h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 8px 0;
+  text-shadow: 0 0 8px #ffffff;
+}
+
+.weather-card p {
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.time-animation {
+  font-weight: bold;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+  font-size: 15px;
+}
+
+.weather-icon {
+  width: 70px;
+  height: 70px;
+  margin: 8px 0;
+  filter: drop-shadow(0 0 6px #00ffff);
+}
+
+@media (max-width: 768px) {
+  .weather-card {
+    width: 85%;
+    max-width: 280px;
+  }
+
+  .weather-card h2 {
+    font-size: 20px;
+  }
+
+  .weather-card h1 {
+    font-size: 32px;
+  }
+
+  .weather-icon {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+@media (max-width: 600px) {
+  .weather-card {
+    width: 90%;
+    max-width: 260px;
+  }
+
+  .weather-card h2 {
+    font-size: 18px;
+  }
+
+  .weather-card h1 {
+    font-size: 28px;
+  }
+
+  .weather-icon {
+    width: 60px;
+    height: 60px;
+  }
+}
