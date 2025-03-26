@@ -5,17 +5,38 @@ const TIMEZONE_URL = "http://worldtimeapi.org/api/timezone";
 
 const fetchWeather = async (city) => {
   try {
+    // Fetch weather data
     const weatherRes = await fetch(`${WEATHER_URL}?q=${city}&units=metric&appid=${API_KEY}`);
-    const forecastRes = await fetch(`${FORECAST_URL}?q=${city}&units=metric&appid=${API_KEY}`);
+    if (!weatherRes.ok) {
+      throw new Error(`City not found: ${city}`);
+    }
 
-    if (!weatherRes.ok || !forecastRes.ok) throw new Error("City not found");
+    const forecastRes = await fetch(`${FORECAST_URL}?q=${city}&units=metric&appid=${API_KEY}`);
+    if (!forecastRes.ok) {
+      throw new Error(`City not found: ${city}`);
+    }
 
     const currentWeather = await weatherRes.json();
     const forecastData = await forecastRes.json();
-    const timezone = currentWeather.timezone / 3600; // Convert seconds to hours
 
-    // Fetch local time using WorldTimeAPI
-    const timeRes = await fetch(`${TIMEZONE_URL}/Etc/GMT${timezone > 0 ? "-" : "+"}${Math.abs(timezone)}`);
+    // Extract timezone offset from OpenWeatherMap data
+    const timezoneOffset = currentWeather.timezone; // Timezone offset in seconds
+    const timezoneHours = timezoneOffset / 3600; // Convert seconds to hours
+
+    // Fetch local time from WorldTimeAPI
+    let timeRes;
+    try {
+      timeRes = await fetch(`${TIMEZONE_URL}/Etc/GMT${timezoneHours > 0 ? "-" : "+"}${Math.abs(timezoneHours)}`);
+    } catch (timeError) {
+      console.warn("Error fetching timezone data. Defaulting to UTC.");
+      return { currentWeather, forecastData, time: "Unavailable" };
+    }
+
+    if (!timeRes.ok) {
+      console.warn("Invalid timezone response, defaulting time to UTC.");
+      return { currentWeather, forecastData, time: "Unavailable" };
+    }
+
     const timeData = await timeRes.json();
     const time = timeData.datetime.split("T")[1].split(".")[0]; // Extract HH:MM:SS
 
