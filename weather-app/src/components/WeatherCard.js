@@ -16,9 +16,9 @@ const WeatherCard = ({ weather }) => {
     };
 
     updateTimeAndDate(); // Initial update
-    const interval = setInterval(updateTimeAndDate, 60000); // Update every minute instead of every second
+    const interval = setInterval(updateTimeAndDate, 60000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval); 
   }, []);
 
   if (!weather?.main || !weather?.weather) {
