@@ -23,150 +23,11 @@ import squallImg from "./assets/images/squall.jpg";
 import tornadoImg from "./assets/images/tornado.jpg";
 import defaultImg from "./assets/images/default.jpg";
 
-// LoginPage component
-const LoginPage = ({ onLogin, onSwitchToSignUp }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Placeholder for actual login logic
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Invalid email address");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      return;
-    }
-
-    // Call the onLogin callback to notify that the user has logged in
-    onLogin();
-  };
-
-  return (
-    <div className="login-container">
-      <h2>Login to Your Account</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Gmail</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
-      </form>
-      <p onClick={onSwitchToSignUp} className="switch-auth">
-        Don't have an account? Sign Up
-      </p>
-    </div>
-  );
-};
-
-// SignUpPage component
-const SignUpPage = ({ onSignUp, onSwitchToLogin }) => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Invalid email address");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      return;
-    }
-
-    // Call the onSignUp callback to notify that the user has signed up
-    onSignUp();
-  };
-
-  return (
-    <div className="signup-container">
-      <h2>Create a New Account</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="fullName">Full Name</label>
-          <input
-            type="text"
-            id="fullName"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Gmail</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit">Sign Up</button>
-      </form>
-      <p onClick={onSwitchToLogin} className="switch-auth">
-        Already have an account? Login
-      </p>
-    </div>
-  );
-};
-
 const App = () => {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(defaultImg);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
 
   const handleSearch = async (city) => {
     try {
@@ -177,6 +38,7 @@ const App = () => {
       setWeather(currentWeather);
       setForecast(forecastData);
 
+      // Set background based on weather condition
       const condition = currentWeather.weather[0].main.toLowerCase();
       setBackgroundImage(getBackgroundImage(condition));
     } catch (error) {
@@ -187,24 +49,7 @@ const App = () => {
     }
   };
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    setIsSignUp(false);
-  };
-
-  const handleSignUp = () => {
-    setIsLoggedIn(true);
-    setIsSignUp(false);
-  };
-
-  const handleSwitchToSignUp = () => {
-    setIsSignUp(true);
-  };
-
-  const handleSwitchToLogin = () => {
-    setIsSignUp(false);
-  };
-
+  // Function to get background images dynamically
   const getBackgroundImage = (condition) => {
     const images = {
       clear: clearImg,
@@ -236,24 +81,10 @@ const App = () => {
         backgroundPosition: "center",
       }}
     >
-      {!isLoggedIn ? (
-        !isSignUp ? (
-          <LoginPage onLogin={handleLogin} onSwitchToSignUp={handleSwitchToSignUp} />
-        ) : (
-          <SignUpPage onSignUp={handleSignUp} onSwitchToLogin={handleSwitchToLogin} />
-        )
-      ) : (
-        <>
-          <div className="welcome-text">
-            <h1>Welcome to the Ultimate Weather App!</h1>
-            <p>Your personalized weather assistant is ready to give you real-time updates, forecasts, and more!</p>
-          </div>
-          <SearchBar onSearch={handleSearch} />
-          {error && <p className="error-message">{error}</p>}
-          {weather && <WeatherCard weather={weather} />}
-          {forecast && <Forecast forecast={forecast} />}
-        </>
-      )}
+      <SearchBar onSearch={handleSearch} />
+      {error && <p className="error-message">{error}</p>}
+      {weather && <WeatherCard weather={weather} />}
+      {forecast && <Forecast forecast={forecast} />}
     </div>
   );
 };
