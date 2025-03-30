@@ -1,8 +1,10 @@
+// src/App.js
 import React, { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 import Forecast from "./components/Forecast";
 import fetchWeather from "./api/weatherApi";
+import Login from "./components/Login";
 import "./styles/App.css";
 
 // Import images correctly for local assets
@@ -28,6 +30,7 @@ const App = () => {
   const [forecast, setForecast] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(defaultImg);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add state for login
 
   const handleSearch = async (city) => {
     try {
@@ -49,7 +52,6 @@ const App = () => {
     }
   };
 
-  // Function to get background images dynamically
   const getBackgroundImage = (condition) => {
     const images = {
       clear: clearImg,
@@ -72,6 +74,11 @@ const App = () => {
     return images[condition] || images.default;
   };
 
+  // Handle login change
+  const handleLogin = (status) => {
+    setIsLoggedIn(status); // Set login state
+  };
+
   return (
     <div
       className="app-container"
@@ -81,10 +88,16 @@ const App = () => {
         backgroundPosition: "center",
       }}
     >
-      <SearchBar onSearch={handleSearch} />
-      {error && <p className="error-message">{error}</p>}
-      {weather && <WeatherCard weather={weather} />}
-      {forecast && <Forecast forecast={forecast} />}
+      {!isLoggedIn ? (
+        <Login onLogin={handleLogin} /> // Show login page if not logged in
+      ) : (
+        <>
+          <SearchBar onSearch={handleSearch} />
+          {error && <p className="error-message">{error}</p>}
+          {weather && <WeatherCard weather={weather} />}
+          {forecast && <Forecast forecast={forecast} />}
+        </>
+      )}
     </div>
   );
 };
