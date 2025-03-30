@@ -1,72 +1,108 @@
+/* Forecast Container Styles */
 .forecast-container {
-  text-align: center;
-  padding: 10px;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-  max-height: 100vh; 
-  overflow: hidden;
-}
-
-.forecast-grid {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-  flex-wrap: wrap; 
-}
-
-.forecast-card {
-  background: rgba(255, 255, 255, 0.1);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  margin-top: 30px;
+  width: 100%;
+  height: 100%; /* Ensure container fills the height */
+  max-width: 1200px; /* Limit the maximum width */
   padding: 10px;
+  box-sizing: border-box;
+  text-align: center; /* Center text */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+}
+
+/* Title of Forecast */
+.forecast-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Grid layout for the forecast cards */
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive grid */
+  gap: 15px;
+  width: 100%;
+  max-width: 1000px; /* Limit grid width */
+  padding: 10px;
+  box-sizing: border-box;
+  justify-items: center; /* Center the grid items */
+  overflow: hidden; /* Prevent overflow */
+  margin: 0 auto; /* Center the grid horizontally */
+  align-items: center; /* Align grid items vertically */
+}
+
+/* Forecast Card Styles */
+.forecast-card {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px;
   border-radius: 10px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
   text-align: center;
-  transition: 0.3s ease-in-out;
-  width: 18%; 
-  min-width: 120px;
+  width: 100%;
+  max-width: 200px; /* Limit the card width */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  margin-right: -180px;
 }
 
+/* Hover effect on the forecast card */
 .forecast-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.9);
+  transform: translateY(-10px);
 }
 
+/* Forecast Icon */
 .forecast-icon {
   width: 60px;
   height: 60px;
+  margin-bottom: 10px;
 }
 
-.forecast-day {
-  font-size: 1em;
-  font-weight: bold;
-  margin-top: 3px;
+/* Day and Date Text */
+.forecast-day, .forecast-date {
+  font-size: 16px;
+  color: white;
+  margin: 5px 0;
 }
 
-.forecast-date {
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
+/* Temperature and Description */
 .forecast-temp {
-  font-size: 1.3em;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffcc00; /* Highlight temperature */
 }
 
 .forecast-desc {
-  font-size: 0.9em;
-  text-transform: capitalize;
+  font-size: 14px;
+  color: white;
+  margin-top: 5px;
 }
 
-
+/* Ensure cards are responsive */
 @media (max-width: 768px) {
   .forecast-grid {
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller grid columns on mobile */
   }
 
   .forecast-card {
-    width: 40%;
-    margin-bottom: 10px;
+    width: 100%;
+    max-width: 150px; /* Adjust the card size for mobile */
+  }
+
+  .forecast-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .forecast-temp {
+    font-size: 16px;
+  }
+
+  .forecast-day, .forecast-date {
+    font-size: 14px;
   }
 }
