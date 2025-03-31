@@ -1,4 +1,3 @@
-// src/components/SearchBar.js
 import React, { useState, useCallback } from "react";
 import "../styles/SearchBar.css";
 
@@ -18,19 +17,22 @@ const SearchBar = ({ onSearch }) => {
   );
 
   return (
-    <form className="search-bar" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Enter city name..."
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        aria-label="City Name"
-        className="search-input"
-      />
-      <button type="submit" aria-label="Search">
-        🔍
-      </button>
-    </form>
+    <div className="search-container">
+      <h2 className="search-header">🌟 Welcome, explorer! Ready to uncover the weather in your city? 🌆</h2>
+      <form className="search-bar" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter the city of your choice..."
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          aria-label="City Name"
+          className="search-input"
+        />
+        <button type="submit" aria-label="Search">
+          🔍
+        </button>
+      </form>
+    </div>
   );
 };
 
