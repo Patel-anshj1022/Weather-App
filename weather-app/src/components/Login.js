@@ -37,7 +37,6 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="login-page">
-      {/* Header outside login container */}
       <header className="app-header">
         <h1>⚡ Welcome to Climora Weather App ⚡</h1>
         <p>Your gateway to real-time weather updates with a futuristic touch.</p>
