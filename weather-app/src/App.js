@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import "./styles/App.css";
 
 // Import images correctly for local assets
+
 import clearImg from "./assets/images/clear.jpg";
 import rainImg from "./assets/images/rain.jpg";
 import snowImg from "./assets/images/snow.jpg";
