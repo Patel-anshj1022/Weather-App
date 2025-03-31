@@ -1,4 +1,4 @@
-const API_KEY = "aebdd3f5c7fae4d6b3c580249b13df42";
+const API_KEY = "91c3291325af2cc3f79fcb5737512637";
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 const FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
 const TIMEZONE_URL = "http://worldtimeapi.org/api/timezone";
