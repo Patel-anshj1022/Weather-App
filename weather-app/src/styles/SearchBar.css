@@ -37,3 +37,6 @@ button:disabled {
   color: #ccc;
   cursor: not-allowed;
 }
+.search-header {
+  color: white;
+}
