@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
@@ -25,16 +24,25 @@ import squallImg from "./assets/images/squall.jpg";
 import tornadoImg from "./assets/images/tornado.jpg";
 import defaultImg from "./assets/images/default.jpg";
 
+// Create a simple LoadingSpinner component for loading states
+const LoadingSpinner = () => (
+  <div className="loading-spinner">
+    <p>Loading...</p>
+  </div>
+);
+
 const App = () => {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(defaultImg);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Add state for login
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleSearch = async (city) => {
     try {
       setError(null);
+      setLoading(true); // Start loading
       const { currentWeather, forecastData } = await fetchWeather(city);
       if (!currentWeather) throw new Error("City not found");
 
@@ -49,6 +57,8 @@ const App = () => {
       setWeather(null);
       setForecast(null);
       setBackgroundImage(defaultImg);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -93,6 +103,7 @@ const App = () => {
       ) : (
         <>
           <SearchBar onSearch={handleSearch} />
+          {loading && <LoadingSpinner />}
           {error && <p className="error-message">{error}</p>}
           {weather && <WeatherCard weather={weather} />}
           {forecast && <Forecast forecast={forecast} />}

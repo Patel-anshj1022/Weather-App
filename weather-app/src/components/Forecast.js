@@ -25,7 +25,7 @@ const Forecast = ({ forecast }) => {
   const futureForecast = forecast.list
     .map((item) => ({
       ...item,
-      date: new Date(item.dt_txt),
+      date: new Date(item.dt_txt), // Convert timestamp to Date object
     }))
     .filter((item) => item.date > today) // Exclude today
     .sort((a, b) => a.date - b.date);
@@ -49,7 +49,11 @@ const Forecast = ({ forecast }) => {
       <div className="forecast-grid">
         {uniqueForecast.map((item, index) => (
           <div key={index} className="forecast-card">
-            <img src={getIconUrl(item.weather[0].icon)} alt={item.weather[0]?.description} className="forecast-icon" />
+            <img 
+              src={getIconUrl(item.weather[0].icon)} 
+              alt={item.weather[0]?.description} 
+              className="forecast-icon" 
+            />
             <p className="forecast-day">{getDayOfWeek(item.dt_txt)}</p>
             <p className="forecast-date">{getFormattedDate(item.dt_txt)}</p>
             <p className="forecast-temp">{Math.round(item.main.temp)}°C</p>

@@ -15,7 +15,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
     if (isSignUp) {
-      
+      // Handle Sign Up
       if (password !== confirmPassword) {
         setError("Passwords do not match.");
         return;
@@ -24,14 +24,14 @@ const Login = ({ onLogin }) => {
         setError("Full Name and Gmail are required.");
         return;
       }
-      
+      // Example sign-up logic (replace with actual authentication)
       setError("");
       alert("Sign Up Successful! Now you can login.");
-      setIsSignUp(false); 
+      setIsSignUp(false); // After signup, show login page
     } else {
-      
-      if (username && password) {
-        onLogin(true); 
+      // Handle Login
+      if (username && password) { // This allows any username/password
+        onLogin(true); // Set logged in state to true
       } else {
         setError("Invalid credentials. Please try again.");
       }
